@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+$text = file_get_contents(__DIR__.'/c1text');
+$textLength = strlen($text);
+$bestLength = 1;
+
+for ($pos = 0; $pos < $textLength - $bestLength; $pos++) {
+    $length = $bestLength;
+    do {
+        $length++;
+        $word = substr($text, $pos, $length);
+        $isBest = strrev($word) === $word;
+        if ($isBest) {
+            $best = $word;
+            $bestLength = $length;
+            echo "[$word]($bestLength)\n";
+        }
+    } while ($length < $textLength - $pos);
+}

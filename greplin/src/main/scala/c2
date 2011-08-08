@@ -1,0 +1,40 @@
+#!/bin/py
+
+def getPrimes(n = 1000000):
+    #Generate list of primes using the sieve of Eratosthenes
+    #the list was arbitrarily chosen to include positive integers
+    #up to 10**6 and it turned out to be enough
+    primes = range(n)
+    primes[1] = 0
+    for p in primes:
+        if p:
+            x = 2*p
+            while x < n:
+                primes[x] = 0
+                x += p
+    return [p for p in primes if p]
+
+def Fib():
+    #Generator for Fibonacci numbers
+    a = 1
+    b = 1
+    while True:
+        yield a
+        c = a + b
+        a = b
+        b = c
+        
+def primeDivs(n, primes = getPrimes()):
+    lst = []
+    for p in primes:
+        if n % p == 0:
+            lst.append(p)
+            while n % p == 0:
+                n /= p
+    return lst
+
+primes = getPrimes()
+for x in Fib():
+    if x > 227000 and x in primes:
+        break
+print sum(primeDivs(x+1, primes))
